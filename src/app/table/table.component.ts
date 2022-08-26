@@ -1,17 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-
-export interface PeriodicElement {
-  id:number;
-  username: string;
-  age: string;
-  title: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id:1,username: "1", age: 'Hydrogen', title: 'H'},
-  { id:2,username: "2", age: 'Hydrogen', title: 'H'},
-];
-
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Contact } from '../models';
 
 @Component({
   selector: 'app-table',
@@ -19,13 +7,22 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
+  displayedColumns: string[] = ['id','name', 'phone'];
+  
+  @Input() contactList?:Contact[];
 
-  displayedColumns: string[] = ['id','username', 'age', 'title'];
-  dataSource = ELEMENT_DATA;
+  dataSource=[
+    { id:1,name: "João", phone: '(16)992929291)'},
+    { id:2,name: "Mack", phone: '(11)921222211'},
+  ];
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: any) {
+    this.dataSource = changes.contactList;    
   }
 
 }

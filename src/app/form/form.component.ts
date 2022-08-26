@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Contact, DEFAULT_CONTACT } from '../models';
 
 @Component({
   selector: 'app-form',
@@ -9,18 +10,23 @@ export class FormComponent implements OnInit {
 
   constructor() { }
 
-  public nome:string='';
-  public telefone:string='';
+  public contactList? : Contact[]=[
+    { id:1,name: "1", phone: 'Hydrogen'},
+    { id:1,name: "1", phone: 'Hydrogen'},
+  ];
+
+  public contact:Contact = DEFAULT_CONTACT;
 
   ngOnInit(): void {
   }
 
   public limpar():void{
-    alert('Limpar');
+    this.contact=DEFAULT_CONTACT;
   }
   
   public salvar():void{
-    alert('salvar');
+    this.contactList?.push({ id:1,name: "1", phone: 'Hydrogen'});
+    alert(this.contactList?.length);
   }
 
 }

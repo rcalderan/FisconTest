@@ -2,18 +2,17 @@
     <h1>Formulário</h1>
     <form >
         <label for="name">Nome</label>
-        <input type="text" class="form-control" id="name"
-       required
-       [(ngModel)]="nome" name="name">
-
+        <input type="text" class="form-control" id="name" required
+            [(ngModel)]="contact.name" name="name">
+        
        <label for="phone">Telefone</label>
         <input type="text" class="form-control" id="phone"
        required
-       [(ngModel)]="telefone" phone="telefone">
+       [(ngModel)]="contact.phone" name="phone">
        <button (click)="limpar()">Limpar</button>    
        <button (click)="salvar()">Salvar</button>
 
-       {{nome}}-{{telefone}}
-
     </form>
 </ng-container>
+
+<app-table [dataSource]="contactList"></app-table>
