@@ -1,18 +1,40 @@
 <ng-container>    
     <h1>Formulário</h1>
     <form >
-        <label for="name">Nome</label>
-        <input type="text" class="form-control" id="name" required
-            [(ngModel)]="contact.name" name="name">
+        <div class="row">
+            <div class="col-7">
+                <label for="name">Nome <span *ngIf="validateName()">(Precisa ter no mínimo 4 caracteres...)</span></label>
+                <input type="text" class="form-control" id="name" required
+                    [(ngModel)]="contact.name" name="name">
+
+            </div>
+            <div class="col-5">
+                <label for="phone">Telefone</label>
+                <input type="text" class="form-control" id="phone"
+               required
+               [(ngModel)]="contact.phone" name="phone">
+            </div>
+        </div>
         
-       <label for="phone">Telefone</label>
-        <input type="text" class="form-control" id="phone"
-       required
-       [(ngModel)]="contact.phone" name="phone">
-       <button (click)="limpar()">Limpar</button>    
-       <button (click)="salvar()">Salvar</button>
-
+       <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-secondary btn-block" (click)="limpar()">Limpar</button> 
+            </div>
+       </div>   
+       <div class="row justify-content-md-center">
+            <div class="col-10">
+                <button type="button" class="btn btn-primary btn-block" (click)="salvar()">Salvar</button>  
+            </div>
+       </div> 
     </form>
+    <div class="alert" [ngClass]="{
+        'alert-danger': msg.severity==='danger',
+        'alert-warning': msg.severity==='warning',
+        'alert-success': msg.severity==='success'        
+    }" role="alert" *ngIf="msg.message!==''">
+        {{msg.message}}
+      </div>
+    <div class="container">
+        <app-table> </app-table>
+    </div>
 </ng-container>
-
-<app-table [dataSource]="contactList"></app-table>

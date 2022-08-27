@@ -14,7 +14,7 @@ sessionStorage.setItem('chave', 'valor');
 var data = sessionStorage.getItem('chave');
    */
 
-  private contacts : ContactModel[]=[];
+  public static contacts : ContactModel[]=[];
 
   constructor() { 
     this.getContacts();
@@ -23,7 +23,7 @@ var data = sessionStorage.getItem('chave');
   //get from storage
   private getContacts() {
     const session=sessionStorage.getItem(SESSION_NAME);
-    this.contacts = session ? this.mapJson(session) : [];
+    ContactService.contacts = session ? this.mapJson(session) : [];
   }
 
   //map data from storage
@@ -39,40 +39,45 @@ var data = sessionStorage.getItem('chave');
 
   //ajust all index
   private ajustIndexes(){
-    for (let index = 1; index <= this.contacts.length; index++) {
-      this.contacts[index-1].id=index;
+    for (let index = 1; index <= ContactService.contacts.length; index++) {
+      ContactService.contacts[index-1].id=index;
     }
   }
 
-  public create(name:string, phone:string){
+  public create(model: ContactModel ):boolean{
     try{
-      const newContact =new Contact(name, phone);
-      this.contacts.push(newContact.getModel());
-      this.save();
+      ContactService.contacts.push(model);
+      return this.save();
     }catch(error){
       console.log(error);
       //if fails, then reset array
       this.getContacts();
+      return false;
     }
   }
 
   //save to session
   private save(){    
-    this.ajustIndexes();
-    const toSession = JSON.stringify(this.contacts);
-    sessionStorage.setItem(SESSION_NAME, toSession);
+    try{
+      this.ajustIndexes();
+      const toSession = JSON.stringify(ContactService.contacts);
+      sessionStorage.setItem(SESSION_NAME, toSession);
+      return true;
+    }catch(error){
+      return false;
+    }
   }
 
   public getContact(id:number):ContactModel|undefined{
-    return this.contacts.find(contact=>contact.id===id);
+    return ContactService.contacts.find(contact=>contact.id===id);
   }
   public delete(id:number):boolean{
     try{
-      const beforeLen = this.contacts.length;
-      const filtered = this.contacts.filter(contact => contact.id != id);
+      const beforeLen = ContactService.contacts.length;
+      const filtered = ContactService.contacts.filter(contact => contact.id != id);
       
       if(filtered.length!==beforeLen){
-          this.contacts=filtered;
+          ContactService.contacts=filtered;
           //update indexes
           this.ajustIndexes();
           this.save();
@@ -88,7 +93,7 @@ var data = sessionStorage.getItem('chave');
   public deleteAll():boolean{
     try{
       sessionStorage.removeItem(SESSION_NAME);
-      this.contacts=[];
+      ContactService.contacts=[];
       return true;
     }catch(error){
       console.log(error);

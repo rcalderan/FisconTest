@@ -45,4 +45,15 @@ export interface ContactModel{
     phone:string;
 }
 
+export interface Message{
+    severity:string;
+    message:string;
+}
+
+export enum SEVERITY{
+    SUCCESS='success',
+    DANGER='danger',
+    WARNING='warning',
+}
+
 export const SESSION_NAME='fiscon_json';
