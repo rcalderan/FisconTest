@@ -23,6 +23,7 @@
     "angular": "^1.8.3",
     "angular-material": "^1.2.5",
     "angular-material-data-table": "^0.10.10",
+    "bootstrap": "^5.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
