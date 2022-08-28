@@ -7,6 +7,7 @@ import { TableComponent } from './table/table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import {MatButtonModule} from '@angular/material/button';
 
 import { FormsModule } from '@angular/forms';
 import { FormComponent } from './form/form.component';
@@ -26,6 +27,7 @@ import {IMaskModule} from 'angular-imask';
     BrowserAnimationsModule,
     MatTableModule,
     MatSortModule,
+    MatButtonModule,
     FormsModule,
     IMaskModule
   ],
