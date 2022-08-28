@@ -22,7 +22,7 @@
             </div>
        </div>   
        <div class="row justify-content-md-center">
-            <div class="col-10">
+            <div class="col-12">
                 <button type="button" class="btn btn-primary btn-block" (click)="salvar()">Salvar</button>  
             </div>
        </div> 
@@ -35,6 +35,6 @@
         {{msg.message}}
       </div>
     <div class="container">
-        <app-table> </app-table>
+        <app-table [dataSource]="contacts"> </app-table>
     </div>
 </ng-container>

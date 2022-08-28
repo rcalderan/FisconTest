@@ -11,6 +11,7 @@ export class FormComponent implements OnInit {
 
   constructor( private contactSertice:ContactService) { }
 
+  public contacts:ContactModel[]=[];
   public contact:ContactModel = new Contact('','').getModel();
 
   public msg:Message={
@@ -19,29 +20,32 @@ export class FormComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.contacts = this.contactSertice.getContacts();
   }
 
   public limpar():void{
     this.contact= new Contact('','').getModel();
+    this.contactSertice.deleteAll();
+    this.contacts = this.contactSertice.getContacts();
     this.msg.message='';
   }
   
   public salvar():void{
-    setTimeout(()=>{
-      this.msg.message='';
-    },5000);
     if(this.validateName()){
       this.msg.severity = SEVERITY.WARNING;
        this.msg.message='Insira um nome válido.'
       return;
     }      
     const gotSaved=this.contactSertice.create(this.contact);
+    this.contact= new Contact('','').getModel();
     this.msg.severity = gotSaved ? SEVERITY.SUCCESS : SEVERITY.DANGER;
     this.msg.message =gotSaved ? 'Contato Salvo!' : 'Não foi possivel salvar contato.';
+    this.contacts = this.contactSertice.getContacts();
   }
 
   public validateName():boolean{
     return this.contact.name.length < 4;
   }
+
 
 }

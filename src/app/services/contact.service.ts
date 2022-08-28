@@ -6,24 +6,15 @@ import { Contact, ContactModel, SESSION_NAME } from '../models';
 })
 export class ContactService {
 
-  /**
-   * // Salva os dados na sessionStorage
-sessionStorage.setItem('chave', 'valor');
+  private contacts : ContactModel[]=[];
 
-// Obtém os dados da sessionStorage
-var data = sessionStorage.getItem('chave');
-   */
-
-  public static contacts : ContactModel[]=[];
-
-  constructor() { 
-    this.getContacts();
-  }
+  constructor() { }
 
   //get from storage
-  private getContacts() {
+  public getContacts() :ContactModel[] {
     const session=sessionStorage.getItem(SESSION_NAME);
-    ContactService.contacts = session ? this.mapJson(session) : [];
+    this.contacts= session ? this.mapJson(session) : [];
+    return this.contacts;
   }
 
   //map data from storage
@@ -39,19 +30,19 @@ var data = sessionStorage.getItem('chave');
 
   //ajust all index
   private ajustIndexes(){
-    for (let index = 1; index <= ContactService.contacts.length; index++) {
-      ContactService.contacts[index-1].id=index;
+    for (let index = 0; index < this.contacts.length; index++) {
+      this.contacts[index].id=index+1;
     }
   }
 
   public create(model: ContactModel ):boolean{
     try{
-      ContactService.contacts.push(model);
+      this.contacts.push(model);
       return this.save();
     }catch(error){
       console.log(error);
       //if fails, then reset array
-      this.getContacts();
+      this.contacts =this.getContacts();
       return false;
     }
   }
@@ -60,28 +51,27 @@ var data = sessionStorage.getItem('chave');
   private save(){    
     try{
       this.ajustIndexes();
-      const toSession = JSON.stringify(ContactService.contacts);
+      const toSession = JSON.stringify(this.contacts);
       sessionStorage.setItem(SESSION_NAME, toSession);
       return true;
     }catch(error){
+      this.contacts =this.getContacts();
       return false;
     }
   }
 
   public getContact(id:number):ContactModel|undefined{
-    return ContactService.contacts.find(contact=>contact.id===id);
+    return this.contacts.find(contact=>contact.id===id);
   }
   public delete(id:number):boolean{
     try{
-      const beforeLen = ContactService.contacts.length;
-      const filtered = ContactService.contacts.filter(contact => contact.id != id);
+      const beforeLen = this.contacts.length;
+      const filtered = this.contacts.filter(contact => contact.id != id);
       
       if(filtered.length!==beforeLen){
-          ContactService.contacts=filtered;
+        this.contacts=filtered;
           //update indexes
-          this.ajustIndexes();
-          this.save();
-          return true;
+        return this.save();
       }
       return false;
     }catch(error){
@@ -93,10 +83,11 @@ var data = sessionStorage.getItem('chave');
   public deleteAll():boolean{
     try{
       sessionStorage.removeItem(SESSION_NAME);
-      ContactService.contacts=[];
+      this.contacts=[];
       return true;
     }catch(error){
       console.log(error);
+      this.contacts =this.getContacts();
       return false;
     }
   }
