@@ -9,8 +9,9 @@
 
             </div>
             <div class="col-5">
-                <label for="phone">Telefone</label>
-                <input type="text" class="form-control" id="phone"
+                <label for="phone">Telefone {{validatePhone() ? '(Formato incorreto)':''}}</label>
+                <input [imask]="phonemask"
+                type="text" phoneMask class="form-control" id="phone"
                required
                [(ngModel)]="contact.phone" name="phone">
             </div>

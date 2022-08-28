@@ -19,6 +19,10 @@ export class FormComponent implements OnInit {
     message:''
   };
 
+  public phonemask={
+    mask: '(00) 00000-0000'
+  };
+
   ngOnInit(): void {
     this.contacts = this.contactSertice.getContacts();
   }
@@ -29,13 +33,19 @@ export class FormComponent implements OnInit {
     this.contacts = this.contactSertice.getContacts();
     this.msg.message='';
   }
+
   
   public salvar():void{
     if(this.validateName()){
       this.msg.severity = SEVERITY.WARNING;
        this.msg.message='Insira um nome válido.'
       return;
-    }      
+    }
+    if(this. validatePhone()){
+      this.msg.severity = SEVERITY.WARNING;
+       this.msg.message='Insira um telefone válido.'
+      return;
+    } 
     const gotSaved=this.contactSertice.create(this.contact);
     this.contact= new Contact('','').getModel();
     this.msg.severity = gotSaved ? SEVERITY.SUCCESS : SEVERITY.DANGER;
@@ -45,6 +55,10 @@ export class FormComponent implements OnInit {
 
   public validateName():boolean{
     return this.contact.name.length < 4;
+  }
+
+  public validatePhone():boolean{
+    return this.contact.phone.length < 15;
   }
 
 

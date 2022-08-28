@@ -12,8 +12,6 @@ export class TableComponent implements OnInit {
   
   @Input() dataSource:ContactModel[]=[];
   
-  @Output() onDataChanged = new EventEmitter<ContactModel[]>();
-
   constructor( contactService:ContactService) {
    }
 

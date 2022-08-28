@@ -10,6 +10,9 @@ import {MatTableModule} from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { FormComponent } from './form/form.component';
 
+//phone mask
+import {IMaskModule} from 'angular-imask';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +24,8 @@ import { FormComponent } from './form/form.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
-    FormsModule
+    FormsModule,
+    IMaskModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
