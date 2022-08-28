@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TableComponent } from './table/table.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 import { FormsModule } from '@angular/forms';
 import { FormComponent } from './form/form.component';
@@ -24,6 +25,7 @@ import {IMaskModule} from 'angular-imask';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
+    MatSortModule,
     FormsModule,
     IMaskModule
   ],
