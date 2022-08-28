@@ -1,4 +1,5 @@
 import { Component, Input,Output, OnInit, EventEmitter } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { ContactModel } from '../models';
 import { ContactService } from '../services/contact.service';
 
@@ -10,11 +11,12 @@ import { ContactService } from '../services/contact.service';
 export class TableComponent implements OnInit {
   displayedColumns: string[] = ['id','name', 'phone'];
   
-  @Input() dataSource:ContactModel[]=[];
+  @Input()
+  dataSource!: MatTableDataSource<ContactModel>;
   
   constructor( contactService:ContactService) {
    }
-
+   
   ngOnInit(): void {
   }
   

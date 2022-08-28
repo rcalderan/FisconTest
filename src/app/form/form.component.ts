@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Contact, ContactModel, Message, SEVERITY } from '../models';
 import { ContactService } from '../services/contact.service';
 
@@ -11,7 +12,7 @@ export class FormComponent implements OnInit {
 
   constructor( private contactSertice:ContactService) { }
 
-  public contacts:ContactModel[]=[];
+  public contacts:MatTableDataSource<ContactModel>= new MatTableDataSource(this.contactSertice.getContacts());
   public contact:ContactModel = new Contact('','').getModel();
 
   public msg:Message={
@@ -23,14 +24,21 @@ export class FormComponent implements OnInit {
     mask: '(00) 00000-0000'
   };
 
+  public nameFilter='';
+
   ngOnInit(): void {
-    this.contacts = this.contactSertice.getContacts();
+    this.contacts.filter=this.nameFilter;
   }
+
+  public updateFilter(){    
+    this.contacts.filter=this.nameFilter;
+  }
+
 
   public limpar():void{
     this.contact= new Contact('','').getModel();
     this.contactSertice.deleteAll();
-    this.contacts = this.contactSertice.getContacts();
+    this.contacts.data = this.contactSertice.getContacts();
     this.msg.message='';
   }
 
@@ -50,7 +58,7 @@ export class FormComponent implements OnInit {
     this.contact= new Contact('','').getModel();
     this.msg.severity = gotSaved ? SEVERITY.SUCCESS : SEVERITY.DANGER;
     this.msg.message =gotSaved ? 'Contato Salvo!' : 'Não foi possivel salvar contato.';
-    this.contacts = this.contactSertice.getContacts();
+    this.contacts.data = this.contactSertice.getContacts();
   }
 
   public validateName():boolean{

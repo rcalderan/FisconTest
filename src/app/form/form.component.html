@@ -35,6 +35,10 @@
     }" role="alert" *ngIf="msg.message!==''">
         {{msg.message}}
       </div>
+    <div class="row">
+        <input type="text" id="filter" (keydown)="updateFilter()" placeholder="Pesquisar nome"
+        [(ngModel)]="nameFilter" name="filter">
+    </div>
     <div class="container">
         <app-table [dataSource]="contacts"> </app-table>
     </div>
